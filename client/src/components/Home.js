@@ -1,6 +1,8 @@
 import React from 'react'
 import Footer1 from './Footer1'
 import Header1 from './Header1'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 
 export default function Home() {
     return (
@@ -11,14 +13,7 @@ export default function Home() {
 	<div className="container">
 		<div className="row">
 			<div className="col-12">
-				<div className="tiny-slider arrow-hover arrow-blur arrow-white arrow-round rounded-3 overflow-hidden">
-					<div className="tiny-slider-inner"
-					dataAutoplay="true"
-					dataHoverpause="true"
-					dataGutter="1"
-					dataArrow="true"
-					dataDots="false"
-					dataItems="1">
+      <Carousel>
 						
 						<div className="card bg-dark-overlay-3 h-400 h-sm-500 h-md-600 rounded-0" style={{backgroundImage: 'url(assets/images/blog/16by9/05.jpg)', backgroundPosition: 'center left', backgroundSize: 'cover'}}>
 							
@@ -79,11 +74,12 @@ export default function Home() {
 		            </div>
 		          </div>
 						</div>
-					</div>
+
+
+            </Carousel>
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 
 
