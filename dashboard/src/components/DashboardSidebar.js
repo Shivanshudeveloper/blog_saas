@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useEffect } from "react";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Avatar,
   Box,
@@ -9,8 +9,8 @@ import {
   Drawer,
   Hidden,
   List,
-  Typography
-} from '@material-ui/core';
+  Typography,
+} from "@material-ui/core";
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
@@ -19,26 +19,31 @@ import {
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
-  Users as UsersIcon
-} from 'react-feather';
-import NavItem from './NavItem';
+  Users as UsersIcon,
+} from "react-feather";
+import NavItem from "./NavItem";
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
+  avatar: "/static/images/avatars/avatar_6.png",
+  jobTitle: "Senior Developer",
+  name: "Katarina Smith",
 };
 
 const items = [
   {
-    href: '/app/addblog',
+    href: "/app/addblog",
     icon: UserPlusIcon,
-    title: 'Add Blog'
+    title: "Add Blog",
   },
   {
-    href: '/app/allblogs',
+    href: "/app/allblogs",
     icon: UsersIcon,
-    title: 'All Blogs'
+    title: "All Blogs",
+  },
+  {
+    href: "/app/authors",
+    icon: UsersIcon,
+    title: "Authors",
   },
   // {
   //   href: '/app/products',
@@ -84,39 +89,33 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const content = (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%'
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
       }}
     >
       <Box
         sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          p: 2
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          p: 2,
         }}
       >
         <Avatar
           component={RouterLink}
           src={user.avatar}
           sx={{
-            cursor: 'pointer',
+            cursor: "pointer",
             width: 64,
-            height: 64
+            height: 64,
           }}
           to="/app/account"
         />
-        <Typography
-          color="textPrimary"
-          variant="h5"
-        >
+        <Typography color="textPrimary" variant="h5">
           {user.name}
         </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
+        <Typography color="textSecondary" variant="body2">
           {user.jobTitle}
         </Typography>
       </Box>
@@ -146,8 +145,8 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           variant="temporary"
           PaperProps={{
             sx: {
-              width: 256
-            }
+              width: 256,
+            },
           }}
         >
           {content}
@@ -162,8 +161,8 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             sx: {
               width: 256,
               top: 64,
-              height: 'calc(100% - 64px)'
-            }
+              height: "calc(100% - 64px)",
+            },
           }}
         >
           {content}
@@ -175,12 +174,12 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
 
 DashboardSidebar.propTypes = {
   onMobileClose: PropTypes.func,
-  openMobile: PropTypes.bool
+  openMobile: PropTypes.bool,
 };
 
 DashboardSidebar.defaultProps = {
-  onMobileClose: () => { },
-  openMobile: false
+  onMobileClose: () => {},
+  openMobile: false,
 };
 
 export default DashboardSidebar;

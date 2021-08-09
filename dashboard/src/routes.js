@@ -12,6 +12,8 @@ import Settings from "src/pages/Settings";
 import AddBlog from "src/pages/AddBlog.js";
 import AllBlogs from "src/pages/AllBlogs.js";
 import Blog from "src/pages/Blog.js";
+import AddAuthor from "src/pages/AddAuthor.js";
+import AuthorDetails from "src/pages/AuthorDetails.js";
 
 import SignIn from "src/pages/SignIn";
 
@@ -29,6 +31,8 @@ const routes = [
       { path: "addblog", element: <AddBlog /> },
       { path: "allblogs", element: <AllBlogs /> },
       { path: "blog", element: <Blog /> },
+      { path: "authors", element: <AddAuthor /> },
+      { path: "author", element: <AuthorDetails /> },
     ],
   },
   {

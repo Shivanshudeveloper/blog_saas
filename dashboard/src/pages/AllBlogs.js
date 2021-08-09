@@ -76,23 +76,13 @@ export default function AllBlogs() {
                   return (
                     <TableRow
                       hover
-                      key={blog._id}
-                      selected={blogs.indexOf(blog._id) !== -1}
+                      key={blog.id}
+                      selected={blogs.indexOf(blog.id) !== -1}
                     >
                       <TableCell>
-                        <Box
-                          sx={{
-                            alignItems: "center",
-                            display: "flex",
-                          }}
-                        >
-                          <Avatar src={blog.image} sx={{ mr: 2 }}>
-                            <img src={blog.filePath} alt="image" />
-                          </Avatar>
-                          <Typography color="textPrimary" variant="body1">
-                            {blog.author}
-                          </Typography>
-                        </Box>
+                        <Typography color="textPrimary" variant="body1">
+                          {blog.author}
+                        </Typography>
                       </TableCell>
                       <TableCell>{blog.title}</TableCell>
                       <TableCell>{ReactHtmlParser(fullBlog)}</TableCell>
