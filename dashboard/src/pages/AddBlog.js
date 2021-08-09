@@ -146,7 +146,7 @@ export default function AddBlog() {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
-        <h3>Description</h3>
+        <h3>Blog</h3>
         <br></br>
         <div>
           <Editor
