@@ -330,9 +330,30 @@ const Blog = () => {
           </Dialog>
         </div>
         <Typography variant="h1">{title}</Typography>
-        <Typography variant="h4" style={{ marginTop: "10px" }}>
-          - {author}
-        </Typography>
+        <div
+          style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
+        >
+          <img
+            src={blogDetails.authorPhoto}
+            alt="image"
+            style={{
+              width: "28px",
+              borderRadius: "50%",
+              height: "28px",
+              marginRight: "5px",
+            }}
+          />
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Typography variant="h6">{author}</Typography>
+            <Typography
+              variant="body2"
+              style={{ fontSize: "12px", marginTop: "-2px" }}
+            >
+              {blogDetails.authorEmail}
+            </Typography>
+          </div>
+        </div>
+
         <div
           style={{
             display: "flex",

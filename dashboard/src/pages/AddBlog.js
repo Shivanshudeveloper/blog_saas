@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextField } from "@material-ui/core";
 import { Editor } from "@tinymce/tinymce-react";
 import { firestore, storage } from "../Firebase/index";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import { v4 as uuid4 } from "uuid";
 import Dropzone from "react-dropzone";
@@ -17,6 +18,9 @@ export default function AddBlog() {
   const [filePath, setFilePath] = useState("");
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [authorNames, setAuthorNames] = useState([]);
+  const [authorEmail, setAuthorEmail] = useState("");
+  const [authorPhoto, setAuthorPhoto] = useState("");
 
   const handleClick = () => {
     setOpenSnack(true);
@@ -89,20 +93,39 @@ export default function AddBlog() {
         title: title,
         author: author,
         blog: blog,
+        authorEmail: authorEmail,
+        authorPhoto: authorPhoto,
       })
       .then(() => {
         console.log("Document successfully written!");
         handleClick();
-        setMessage("Docuement Saved");
+        setMessage("Blog Added");
         setAuthor("");
         setFilePath("");
         setTitle("");
         setBlog("");
+        setAuthorEmail("");
+        setAuthorPhoto("");
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
       });
   };
+
+  useEffect(() => {
+    setAuthorNames([]);
+    firestore
+      .collection("Authors")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          //   console.log(doc.id, " => ", doc.data());
+          setAuthorNames((prev) => [...prev, doc.data()]);
+        });
+      });
+  }, []);
+
   return (
     <div>
       <Snackbar
@@ -139,12 +162,20 @@ export default function AddBlog() {
           onChange={(e) => setTitle(e.target.value)}
         />
         <h3>Author</h3>
-        <TextField
+        <Autocomplete
           style={{ margin: "1% 0" }}
-          label="Blog Author"
-          fullWidth
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
+          options={authorNames}
+          getOptionLabel={(option) => option?.name}
+          inputValue={author}
+          onInputChange={(e) => setAuthor(e?.target?.value)}
+          onChange={(e, newValue) => {
+            setAuthor(newValue?.name || "");
+            setAuthorEmail(newValue?.email);
+            setAuthorPhoto(newValue?.filePath);
+          }}
+          renderInput={(params) => (
+            <TextField {...params} label="Author Name" variant="outlined" />
+          )}
         />
         <h3>Blog</h3>
         <br></br>

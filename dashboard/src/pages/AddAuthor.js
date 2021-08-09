@@ -82,11 +82,6 @@ export default function AddBlog() {
             setFilePath(fp);
             handleClick();
             setMessage("File Uploaded");
-            setFile([]);
-            setFname("");
-            setLname("");
-            setEmail("");
-            setPhone("");
           }
         );
       });
@@ -111,11 +106,18 @@ export default function AddBlog() {
         name: `${fname} ${lname}`,
         email: email,
         phoneNum: phone,
+        filePath: filePath,
       })
       .then(() => {
         console.log("Document successfully written!");
         handleClick();
-        setMessage("User Added Saved");
+        setMessage("User Added");
+        setFile([]);
+        setFname("");
+        setLname("");
+        setEmail("");
+        setPhone("");
+        setAdding(false);
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
