@@ -70,8 +70,8 @@ export default function AllBlogs() {
               </TableHead>
               <TableBody>
                 {blogs.slice(0, limit).map((blog) => {
-                  var fullBlog = blog.blog;
-                  if (blog.blog.length > 30)
+                  var fullBlog = blog.blog.description;
+                  if (blog.blog.description?.length > 30)
                     fullBlog = fullBlog.slice(0, 30) + "...";
                   return (
                     <TableRow
@@ -81,10 +81,10 @@ export default function AllBlogs() {
                     >
                       <TableCell>
                         <Typography color="textPrimary" variant="body1">
-                          {blog.author}
+                          {blog?.blog?.author}
                         </Typography>
                       </TableCell>
-                      <TableCell>{blog.title}</TableCell>
+                      <TableCell>{blog?.blog?.title}</TableCell>
                       <TableCell>{ReactHtmlParser(fullBlog)}</TableCell>
                       <TableCell>
                         <Button
