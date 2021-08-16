@@ -6,7 +6,7 @@ import "firebase/messaging";
 import "firebase/analytics";
 import "firebase/firestore";
 
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyBSEx2-ykPTb70keLZh3LAuDtQT2VyCsco",
   authDomain: "evencloud-26d32.firebaseapp.com",
   databaseURL: "https://evencloud-26d32.firebaseio.com",
