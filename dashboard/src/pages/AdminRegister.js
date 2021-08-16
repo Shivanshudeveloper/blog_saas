@@ -16,7 +16,7 @@ import Container from "@material-ui/core/Container";
 import { auth } from "../Firebase/index";
 import { useNavigate } from "react-router";
 
-const Register = () => {
+const AdminRegister = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,12 +33,12 @@ const Register = () => {
         user
           .updateProfile({
             displayName: `${fName} ${lName}`,
-            tenantId: "admin",
+            photoURL: "userIsAdmin",
           })
           .then(() => {
-            sessionStorage.setItem("userId", user.uid);
-            sessionStorage.setItem("userEmail", user.email);
-            sessionStorage.setItem("userName", user.displayName);
+            sessionStorage.setItem("adminAuthId", user.uid);
+            sessionStorage.setItem("adminEmail", user.email);
+            sessionStorage.setItem("adminName", user.displayName);
             setMessage("");
             setEmail("");
             setPassword("");
@@ -84,7 +84,7 @@ const Register = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Admin Sign up
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -174,4 +174,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default AdminRegister;

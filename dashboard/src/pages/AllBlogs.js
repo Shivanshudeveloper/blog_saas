@@ -21,19 +21,34 @@ export default function AllBlogs() {
   const [blogs, setBlogs] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const userId = sessionStorage.getItem("userId");
 
   useEffect(() => {
     setBlogs([]);
-    firestore
-      .collection("Blogs")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          //   console.log(doc.id, " => ", doc.data());
-          setBlogs((prev) => [...prev, doc.data()]);
+    if (userId !== null) {
+      firestore
+        .collection("Blogs")
+        .where("authorId", "==", userId)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            //   console.log(doc.id, " => ", doc.data());
+            setBlogs((prev) => [...prev, doc.data()]);
+          });
         });
-      });
+    } else {
+      firestore
+        .collection("Blogs")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            //   console.log(doc.id, " => ", doc.data());
+            setBlogs((prev) => [...prev, doc.data()]);
+          });
+        });
+    }
   }, []);
 
   console.log(blogs);

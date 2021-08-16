@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
@@ -23,66 +23,54 @@ import {
 } from "react-feather";
 import NavItem from "./NavItem";
 
-const user = {
-  name: "Admin",
-};
-
-const items = [
-  {
-    href: "/app/addblog",
-    icon: UserPlusIcon,
-    title: "Add Blog",
-  },
-  {
-    href: "/app/allblogs",
-    icon: UsersIcon,
-    title: "All Blogs",
-  },
-  {
-    href: "/app/authors",
-    icon: UsersIcon,
-    title: "Authors",
-  },
-  // {
-  //   href: '/app/products',
-  //   icon: ShoppingBagIcon,
-  //   title: 'Products'
-  // },
-  // {
-  //   href: '/app/account',
-  //   icon: UserIcon,
-  //   title: 'Account'
-  // },
-  // {
-  //   href: '/app/settings',
-  //   icon: SettingsIcon,
-  //   title: 'Settings'
-  // },
-  // {
-  //   href: '/login',
-  //   icon: LockIcon,
-  //   title: 'Login'
-  // },
-  // {
-  //   href: '/register',
-  //   icon: UserPlusIcon,
-  //   title: 'Register'
-  // },
-  // {
-  //   href: '/404',
-  //   icon: AlertCircleIcon,
-  //   title: 'Error'
-  // }
-];
-
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+  const [name, setName] = useState("");
+  const [items, setItems] = useState([
+    {
+      href: "/app/addblog",
+      icon: UserPlusIcon,
+      title: "Add Blog",
+    },
+    {
+      href: "/app/allblogs",
+      icon: UsersIcon,
+      title: "All Blogs",
+    },
+  ]);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    const adminAuthId = sessionStorage.getItem("adminAuthId");
+    if (adminAuthId !== null) {
+      const n = sessionStorage.getItem("adminName");
+      const e = sessionStorage.getItem("adminEmail");
+      setName(n);
+    } else {
+      const n = sessionStorage.getItem("userName");
+      const e = sessionStorage.getItem("userEmail");
+      setName(n);
+    }
+  }, []);
+
+  useEffect(() => {
+    const adminAuthId = sessionStorage.getItem("adminAuthId");
+    if (adminAuthId !== null) {
+      setItems([
+        ...items,
+        {
+          href: "/app/authors",
+          icon: UsersIcon,
+          title: "Authors",
+        },
+      ]);
+    }
+  }, []);
 
   const content = (
     <Box
@@ -102,7 +90,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       >
         <Avatar
           component={RouterLink}
-          src={user.avatar}
+          // src={user?.avatar}
           sx={{
             cursor: "pointer",
             width: 64,
@@ -111,10 +99,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           to="/app/account"
         />
         <Typography color="textPrimary" variant="h5">
-          {user.name}
+          {name}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {user.jobTitle}
+          {/* {user.jobTitle} */}
         </Typography>
       </Box>
       <Divider />

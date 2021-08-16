@@ -24,6 +24,10 @@ export default function AddBlog() {
   const [authorNames, setAuthorNames] = useState([]);
   const [authorEmail, setAuthorEmail] = useState("");
   const [authorPhoto, setAuthorPhoto] = useState("");
+  const adminAuthId = sessionStorage.getItem("adminAuthId");
+  const name = sessionStorage.getItem("userName");
+  const userId = sessionStorage.getItem("userId");
+  const userEmail = sessionStorage.getItem("userEmail");
   const defaultValue = {
     invNum: "",
     title: "",
@@ -40,7 +44,7 @@ export default function AddBlog() {
     exhibition: "",
     bibliography: "",
     category: "",
-    author: "",
+    author: adminAuthId === null ? name : "",
   };
   const [fullBlog, setFullBlog] = useState(defaultValue);
 
@@ -141,8 +145,9 @@ export default function AddBlog() {
       .set({
         id: uniquetwoKey,
         blog: fullBlog,
-        authorEmail: authorEmail,
+        authorEmail: adminAuthId === null ? userEmail : authorEmail,
         authorPhoto: authorPhoto,
+        authorId: userId !== null ? userId : "",
       })
       .then(() => {
         console.log("Document successfully written!");
@@ -271,33 +276,36 @@ export default function AddBlog() {
             half
           />
           <Input name="title" label="Title" handleChange={handleChange} />
-          <Autocomplete
-            options={authorNames}
-            getOptionLabel={(option) => option?.name}
-            inputValue={fullBlog.author}
-            fullWidth
-            style={{
-              paddingLeft: "16px",
-              width: "100%",
-              paddingTop: "16px",
-            }}
-            onInputChange={(e) =>
-              setFullBlog({ ...fullBlog, author: e?.target?.value })
-            }
-            onChange={(e, newValue) => {
-              setFullBlog({ ...fullBlog, author: newValue?.name || "" });
-              setAuthorEmail(newValue?.email);
-              setAuthorPhoto(newValue?.filePath);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Author Name"
-                variant="outlined"
-                fullWidth
-              />
-            )}
-          />
+          {adminAuthId !== null && (
+            <Autocomplete
+              options={authorNames}
+              getOptionLabel={(option) => option?.name}
+              inputValue={fullBlog.author}
+              fullWidth
+              style={{
+                paddingLeft: "16px",
+                width: "100%",
+                paddingTop: "16px",
+              }}
+              onInputChange={(e) =>
+                setFullBlog({ ...fullBlog, author: e?.target?.value })
+              }
+              onChange={(e, newValue) => {
+                setFullBlog({ ...fullBlog, author: newValue?.name || "" });
+                setAuthorEmail(newValue?.email);
+                setAuthorPhoto(newValue?.filePath);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Author Name"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+          )}
+
           <div
             style={{ paddingLeft: "16px", width: "100%", paddingTop: "16px" }}
           >

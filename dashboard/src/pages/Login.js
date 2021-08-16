@@ -50,11 +50,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
+  const navigate = useNavigate();
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const loginUser = (e) => {
     e.preventDefault();
@@ -62,12 +63,20 @@ export default function Login() {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         auth.onAuthStateChanged(function (user) {
-          console.log(user);
           if (user) {
-            sessionStorage.setItem("userId", user.uid);
-            sessionStorage.setItem("userEmail", user.email);
-            sessionStorage.setItem("userName", user.displayName);
-            // sessionStorage.setItem("userPhoto", user.photoURL);
+            if (
+              isAdmin &&
+              email === "admin1@gmail.com" &&
+              password === "123123"
+            ) {
+              sessionStorage.setItem("adminAuthId", user.uid);
+              sessionStorage.setItem("adminEmail", user.email);
+              sessionStorage.setItem("adminName", user.displayName);
+            } else {
+              sessionStorage.setItem("userId", user.uid);
+              sessionStorage.setItem("userEmail", user.email);
+              sessionStorage.setItem("userName", user.displayName);
+            }
             setMessage("");
             navigate("/app/dashboard", { replace: true });
           } else {
@@ -92,7 +101,14 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
+          {isAdmin && "Admin "}
           Sign in
+        </Typography>
+        <Typography component="h1" variant="h5">
+          {isAdmin && "Email = admin1@gmail.com"}
+        </Typography>
+        <Typography component="h1" variant="h5">
+          {isAdmin && "Password = 123123"}
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -137,8 +153,18 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
+              <Link
+                variant="body2"
+                style={{ cursor: "pointer", textDecoration: "none" }}
+                onClick={() => {
+                  setIsAdmin((prev) => !prev);
+                  setEmail("");
+                  setPassword("");
+                  setMessage("");
+                }}
+              >
+                {/* Forgot password? */}
+                {isAdmin ? "Customer Login" : "Admin Login"}
               </Link>
             </Grid>
             <Grid item>
