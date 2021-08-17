@@ -68,6 +68,11 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           icon: UsersIcon,
           title: "Authors",
         },
+        {
+          href: "/app/categories",
+          icon: UserPlusIcon,
+          title: "Categories",
+        },
       ]);
     }
   }, []);

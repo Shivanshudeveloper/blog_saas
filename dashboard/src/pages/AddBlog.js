@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid, TextField } from "@material-ui/core";
+import { Button, Grid, TextField, InputLabel } from "@material-ui/core";
 import { Editor } from "@tinymce/tinymce-react";
 import { firestore, storage } from "../Firebase/index";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 import { v4 as uuid4 } from "uuid";
 import Dropzone from "react-dropzone";
@@ -24,6 +27,8 @@ export default function AddBlog() {
   const [authorNames, setAuthorNames] = useState([]);
   const [authorEmail, setAuthorEmail] = useState("");
   const [authorPhoto, setAuthorPhoto] = useState("");
+  const [categoryList, setCategoryList] = useState([]);
+
   const adminAuthId = sessionStorage.getItem("adminAuthId");
   const name = sessionStorage.getItem("userName");
   const userId = sessionStorage.getItem("userId");
@@ -47,6 +52,19 @@ export default function AddBlog() {
     author: adminAuthId === null ? name : "",
   };
   const [fullBlog, setFullBlog] = useState(defaultValue);
+
+  useEffect(() => {
+    setCategoryList([]);
+    firestore
+      .collection("Category")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          //   console.log(doc.data());
+          setCategoryList((prev) => [...prev, doc.data()]);
+        });
+      });
+  }, []);
 
   React.useEffect(() => {
     if (file.length > 0) {
@@ -342,12 +360,21 @@ export default function AddBlog() {
             handleChange={handleChange}
             half
           />
-          <Input
-            name="category"
-            label="Category"
-            handleChange={handleChange}
-            half
-          />
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>Category</InputLabel>
+              <Select
+                value={fullBlog.category}
+                onChange={(e) =>
+                  setFullBlog({ ...fullBlog, category: e.target.value })
+                }
+              >
+                {categoryList.map((cat) => (
+                  <MenuItem value={cat.category}>{cat.category}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
           <div
             style={{ paddingLeft: "16px", width: "100%", paddingTop: "16px" }}
           >
