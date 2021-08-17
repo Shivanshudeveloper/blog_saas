@@ -1,16 +1,9 @@
 const firestore = firebase.firestore();
 const blogCards = document.querySelector(".display-card");
 
-{
-  /* <img src="assets/images/blog/3by4/01.jpg" alt=""> */
-}
-{
-  /* <li class="nav-item">Aug 18, 2021</li> */
-}
-
 async function getBlog() {
-  const citiesRef = firestore.collection("Blogs");
-  const snapshot = await citiesRef.get();
+  const blogRef = firestore.collection("Blogs");
+  const snapshot = await blogRef.get();
   snapshot.forEach((doc) => {
     var blogImage = `${doc.data().blog.photoImage}`;
     if (blogImage === "") blogImage = "assets/images/blog/3by4/01.jpg";

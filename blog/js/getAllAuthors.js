@@ -2,8 +2,8 @@ const firestore = firebase.firestore();
 const artistRow = document.querySelector(".artist-row");
 
 async function getAllAuthor() {
-  const citiesRef = firestore.collection("Authors");
-  const snapshot = await citiesRef.get();
+  const authorRef = firestore.collection("Authors");
+  const snapshot = await authorRef.get();
   snapshot.forEach((doc) => {
     artistRow.innerHTML += `
     <div class="col-sm-6 col-lg-3">

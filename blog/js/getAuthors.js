@@ -1,12 +1,11 @@
 const artistRow = document.querySelector(".artist-row");
 
 async function getAuthor() {
-  const citiesRef = firestore.collection("Authors");
-  const snapshot = await citiesRef.get();
+  const authorRef = firestore.collection("Authors");
+  const snapshot = await authorRef.get();
   var i = 1;
   snapshot.forEach((doc) => {
-    if (i == 7) return;
-    console.log(doc.id, "=>", doc.data());
+    if (i == 5) return;
     artistRow.innerHTML += `
     <div class="col-sm-6 col-lg-2">
     <div class="text-center">
