@@ -12,7 +12,6 @@ async function getBlog() {
   const citiesRef = firestore.collection("Blogs");
   const snapshot = await citiesRef.get();
   snapshot.forEach((doc) => {
-    console.log(doc.id, "=>", doc.data());
     var blogImage = `${doc.data().blog.photoImage}`;
     if (blogImage === "") blogImage = "assets/images/blog/3by4/01.jpg";
     blogCards.innerHTML += `
