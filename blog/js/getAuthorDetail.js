@@ -32,7 +32,6 @@ getAuthorDetail();
 const blogCards = document.querySelector(".display-card");
 
 async function getBlog() {
-  console.log(id);
   const blogRef = firestore.collection("Blogs");
   const snapshot = await blogRef.where("authorId", "==", id).get();
   if (snapshot.empty) {
@@ -40,7 +39,6 @@ async function getBlog() {
     return;
   }
   snapshot.forEach((doc) => {
-    console.log(doc);
     var blogImage = `${doc.data().blog.photoImage}`;
     if (blogImage === "") blogImage = "assets/images/blog/3by4/01.jpg";
     blogCards.innerHTML += `
@@ -56,9 +54,11 @@ async function getBlog() {
                   }</a>
               </div>
               <div class="w-100 mt-auto">
-                  <h4 class="text-white"><a href="post-single-5.html" class="btn-link text-reset stretched-link">${
-                    doc.data().blog.title
-                  }</a></h4>
+                  <h4 class="text-white"><a href="post-single.html?id=${
+                    doc.id
+                  }" class="btn-link text-reset stretched-link">${
+      doc.data().blog.title
+    }</a></h4>
                   <ul class="nav nav-divider text-white-force align-items-center small">
                       <li class="nav-item position-relative">
                           <div class="nav-link">by
