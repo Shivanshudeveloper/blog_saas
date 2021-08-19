@@ -20,9 +20,11 @@ async function getBlog() {
                 }</a>
             </div>
             <div class="w-100 mt-auto">
-                <h4 class="text-white"><a href="post-single-5.html" class="btn-link text-reset stretched-link">${
-                  doc.data().blog.title
-                }</a></h4>
+                <h4 class="text-white"><a href="post-single.html?id=${
+                  doc.id
+                }" class="btn-link text-reset stretched-link">${
+      doc.data().blog.title
+    }</a></h4>
                 <ul class="nav nav-divider text-white-force align-items-center small">
                     <li class="nav-item position-relative">
                         <div class="nav-link">by 
