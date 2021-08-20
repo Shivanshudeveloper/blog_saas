@@ -14,7 +14,7 @@ async function getAllAuthor() {
               doc.data().filePath
             }" alt="authorPhoto">
         </div>
-        <a href="/blog/artist-detail.html?id=${doc.id}">
+        <a href="artist-detail.html?id=${doc.id}">
           <h5>${doc.data().name}</h5>
         </a>
         <p class="m-0">${doc.data().email}</p>
